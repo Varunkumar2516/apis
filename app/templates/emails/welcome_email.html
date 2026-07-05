@@ -1,0 +1,61 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
+<h1>
+
+Welcome to PlaylistWise AI 🎉
+
+</h1>
+
+<p>
+
+Hi {{ username }},
+
+</p>
+
+<p>
+
+Your account has been created successfully.
+
+</p>
+
+<p>
+
+You can now
+
+<ul>
+
+<li>Analyze YouTube playlists</li>
+
+<li>Chat with AI</li>
+
+<li>Generate Notes</li>
+
+<li>Create Quizzes</li>
+
+<li>Track Learning</li>
+
+</ul>
+
+</p>
+
+<center>
+
+<a
+href="{{ login_link }}"
+class="button">
+
+Open PlaylistWise AI
+
+</a>
+
+</center>
+
+<p>
+
+We're excited to help you learn smarter.
+
+</p>
+
+{% endblock %}

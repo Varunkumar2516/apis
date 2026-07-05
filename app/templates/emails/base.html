@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>{{ title }}</title>
+
+<style>
+
+body{
+
+margin:0;
+padding:0;
+
+background:#f5f7fb;
+
+font-family:Arial,Helvetica,sans-serif;
+
+}
+
+.wrapper{
+
+width:100%;
+
+padding:40px 0;
+
+}
+
+.card{
+
+width:600px;
+
+margin:auto;
+
+background:white;
+
+border-radius:15px;
+
+overflow:hidden;
+
+box-shadow:0 8px 30px rgba(0,0,0,.08);
+
+}
+
+.header{
+
+padding:40px;
+
+text-align:center;
+
+background:linear-gradient(
+135deg,
+#5B4BFF,
+#4CC9F0
+);
+
+}
+
+.logo{
+
+width:130px;
+
+}
+
+.content{
+
+padding:45px;
+
+color:#444;
+
+font-size:16px;
+
+line-height:1.7;
+
+}
+
+.content h1{
+
+margin-top:0;
+
+font-size:32px;
+
+color:#222;
+
+}
+
+.button{
+
+display:inline-block;
+
+margin-top:30px;
+
+padding:16px 34px;
+
+background:#5B4BFF;
+
+color:white !important;
+
+text-decoration:none;
+
+font-weight:bold;
+
+border-radius:8px;
+
+}
+
+.link{
+
+margin-top:30px;
+
+padding:15px;
+
+background:#f3f4f8;
+
+border-radius:10px;
+
+word-break:break-all;
+
+font-size:14px;
+
+}
+
+.footer{
+
+padding:30px;
+
+background:#fafafa;
+
+text-align:center;
+
+font-size:13px;
+
+color:#777;
+
+}
+
+.footer a{
+
+color:#5B4BFF;
+
+text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="card">
+
+<div class="header">
+
+<img
+src="{{ logo_url }}"
+class="logo">
+
+</div>
+
+<div class="content">
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+
+<div class="footer">
+
+<strong>PlaylistWise AI</strong>
+
+<br><br>
+
+Learn Smart. Grow Fast.
+
+<br><br>
+
+Need help?
+
+<br>
+
+<a href="mailto:playlistwise.ai.dev@gmail.com">
+
+playlistwise.ai.dev@gmail.com
+
+</a>
+
+<br><br>
+
+© 2026 PlaylistWise AI
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

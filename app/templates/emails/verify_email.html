@@ -1,0 +1,62 @@
+{% extends "emails/base.html" %}
+
+{% block content %}
+
+<h1>
+
+Verify Your Email
+
+</h1>
+
+<p>
+
+Hi {{ username }},
+
+</p>
+
+<p>
+
+Welcome to <b>PlaylistWise AI</b>.
+
+Before you start learning, please verify your email address.
+
+</p>
+
+<center>
+
+<a
+href="{{ verification_link }}"
+class="button">
+
+Verify Email
+
+</a>
+
+</center>
+
+<p>
+
+This verification link expires in
+<strong>10 minutes</strong>.
+
+</p>
+
+<p>
+
+If the button doesn't work, copy this URL into your browser.
+
+</p>
+
+<div class="link">
+
+{{ verification_link }}
+
+</div>
+
+<p>
+
+If you didn't create this account, simply ignore this email.
+
+</p>
+
+{% endblock %}

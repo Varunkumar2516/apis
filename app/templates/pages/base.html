@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PlaylistWise AI{% endblock %}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(91, 75, 255, 0.12), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(76, 201, 240, 0.10), transparent 32%),
+                #f5f7fb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #1f2937;
+        }
+
+        .page-wrap {
+            width: 100%;
+            max-width: 920px;
+            display: grid;
+            place-items: center;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 560px;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.18);
+        }
+
+        .hero {
+            padding: 32px 32px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #5B4BFF 0%, #4CC9F0 100%);
+            color: #fff;
+        }
+
+        .logo {
+            width: 120px;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto 14px;
+        }
+
+        .brand {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .brand-sub {
+            margin-top: 6px;
+            font-size: 14px;
+            opacity: 0.92;
+        }
+
+        .content {
+            padding: 36px;
+        }
+
+        .content h1 {
+            font-size: 30px;
+            line-height: 1.2;
+            color: #111827;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .content p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #4b5563;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .actions {
+            margin-top: 28px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5B4BFF 0%, #4636ff 100%);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(91, 75, 255, 0.24);
+        }
+
+        .btn-secondary {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .muted-box {
+            margin-top: 24px;
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            word-break: break-word;
+            font-size: 13px;
+            color: #6b7280;
+            text-align: center;
+        }
+
+        .footer {
+            padding: 22px 28px 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #6b7280;
+            background: #fafafa;
+            border-top: 1px solid #eef2f7;
+        }
+
+        .footer strong {
+            color: #111827;
+        }
+
+        @media (max-width: 640px) {
+            .card {
+                border-radius: 20px;
+            }
+
+            .hero {
+                padding: 28px 22px 20px;
+            }
+
+            .content {
+                padding: 26px 20px 30px;
+            }
+
+            .content h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <div class="card">
+            <div class="hero">
+                {% if logo_url %}
+                    <img src="{{ logo_url }}" alt="PlaylistWise AI Logo" class="logo">
+                {% endif %}
+
+                <div class="brand">PlaylistWise AI</div>
+                <div class="brand-sub">Learn Smart. Grow Fast.</div>
+            </div>
+
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+
+            <div class="footer">
+                <strong>PlaylistWise AI</strong><br>
+                Learn Smart. Grow Fast.<br><br>
+                Need help? <a href="mailto:support@playlistwise.ai">support@playlistwise.ai</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

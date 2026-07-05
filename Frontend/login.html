@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="backend-url" content="%REACT_APP_BACKEND_URL%" />
+<title>Sign in — PlaylistWise AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="style.css" >
+</head>
+<body>
+<div class="auth-wrap">
+  <div class="auth-side">
+    <a href="/" class="logo"><span class="logo-mark"><i class="ph ph-brain"></i></span><span>PlaylistWise.AI</span></a>
+    <div>
+      <h2>Welcome back. <span class="grad-text">Your AI tutor</span> is waiting.</h2>
+      <p>Pick up your playlist where you left off. Ask new questions. Generate notes. Build mastery — one video at a time.</p>
+    </div>
+    <p style="color:var(--text-muted);font-size:0.85rem;position:relative;z-index:1">© 2026 PlaylistWise AI</p>
+  </div>
+  <div class="auth-form-wrap">
+    <div class="auth-card fade-in">
+      <h2>Sign in</h2>
+      <p class="sub">Continue your learning journey</p>
+      <form id="login-form">
+        <div class="form-group"><label for="email">Email</label><input class="input" type="email" id="email" required placeholder="you@example.com" data-testid="login-email-input" /></div>
+        <div class="form-group"><label for="password">Password</label><input class="input" type="password" id="password" required placeholder="••••••••" data-testid="login-password-input" /></div>
+        <div class="between" style="margin-bottom:18px"><label class="check-row"><input type="checkbox" /> Remember me</label><a href="#" class="auth-link" style="font-size:0.85rem">Forgot password?</a></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-testid="login-submit-btn"><span class="btn-label">Sign in</span></button>
+      </form>
+      <div class="divider">or continue with</div>
+      <div class="social-btns">
+        <button class="btn btn-glass" data-testid="login-google-btn" onclick="PW.toast('Google login coming soon', 'info')"><i class="ph ph-google-logo"></i> Google</button>
+        <button class="btn btn-glass" data-testid="login-github-btn" onclick="PW.toast('GitHub login coming soon', 'info')"><i class="ph ph-github-logo"></i> GitHub</button>
+      </div>
+      <p style="text-align:center;margin-top:22px;color:var(--text-secondary);font-size:0.9rem">No account? <a href="signup.html" class="auth-link" data-testid="login-to-signup-link">Create one</a></p>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  const lbl = btn.querySelector('.btn-label');
+  btn.disabled = true; lbl.textContent = 'Signing in...';
+  try {
+    const data = await PW.api('/auth/login', { method: 'POST', body: JSON.stringify({
+      email: document.getElementById('email').value, password: document.getElementById('password').value
+    })});
+    PW.setAuth(data.token, data.user);
+    PW.toast('Welcome back!', 'success');
+    setTimeout(() => window.location.href = 'dashboard.html', 500);
+  } catch (err) { PW.toast(err.message, 'error'); btn.disabled = false; lbl.textContent = 'Sign in'; }
+});
+</script>
+</html>
