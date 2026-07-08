@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <input type="text" placeholder="Enter New List" id="listvalue">
+    <button id="input-button" onclick="AddFunct()">Add to list</button>
+    <ul id="Unordered-list">
+        <li class="ListItems">hello</li>
+        <li class="ListItems">hello</li>
+    </ul>
+
+    <button class ='bag-button' onclick="document.location.href='index3.html'">Next page</button>
+
+    <script>
+          const AddFunct= ()=>{
+            const unorderd_list = document.querySelector('#Unordered-list')
+            const ListValue = document.querySelector('#listvalue').value;
+            if (ListValue !=""){
+                const li = document.createElement('li');
+                li.innerText = ListValue;
+                unorderd_list.appendChild(li);
+                document.querySelector('#listvalue').value = '';
+            }
+          }
+    </script>
+</body>
+</html>

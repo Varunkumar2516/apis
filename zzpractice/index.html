@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button class ='bag-button' onclick="AddtoCart()">Add to Bag</button>
+    <button class ='Wish-button' onclick="AddtoWishList()">❤️ Wishlist</button>
+    <button class ='bag-button' onclick="AddSaleToCart()">Add 1+1 sale Item</button>
+    <button class ='bag-button' onclick="RemoveAll()">Remove All</button>
+    <button class ='bag-button' onclick=" 
+    window.location.href = 'index2.html'">Next Page</button>
+    <h1 id="cart-Summary">Your Bag Has 0 Items</h1>
+   
+    <script>
+        let cartCount =0;
+        document.querySelector('#cart-Summary')
+        .innerText =`Your Bag Has ${cartCount} Items`;
+
+        let AddtoCart = ()=>{
+           cartCount+=1;
+           document.querySelector('#cart-Summary')
+           .innerText =`Your Bag Has ${cartCount} Items`;
+
+        }
+        let AddtoWishList = ()=>{
+            if(cartCount>0){
+                cartCount-=1;
+                document.querySelector('#cart-Summary')
+                .innerText =`Your Bag Has ${cartCount} Items`;
+            }
+            else{
+                 document.querySelector('#cart-Summary')
+                .innerText =`Your Bag Has ${cartCount} Items`;
+            }
+        }
+        let AddSaleToCart=()=>{
+             cartCount+=2;
+           document.querySelector('#cart-Summary')
+           .innerText =`Your Bag Has ${cartCount} Items`;
+
+        }
+        let RemoveAll = ()=>{
+            cartCount=0;
+           document.querySelector('#cart-Summary')
+           .innerText =`Your Bag Has ${cartCount} Items`;
+
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Calculator | JS Practice</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.calculator {
+    width: 360px;
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Display Styling */
+.display {
+    background-color: #0f172a;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 100px;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.previous-operand {
+    color: rgba(148, 163, 184, 0.8);
+    font-size: 1.1rem;
+    min-height: 24px;
+}
+
+.current-operand {
+    color: #f8fafc;
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+/* Buttons Layout */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 18px;
+    border-radius: 14px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #e2e8f0;
+    background: rgba(51, 65, 85, 0.5);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background: rgba(71, 85, 105, 0.7);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Specific Button Styles */
+.btn.operator {
+    color: #38bdf8;
+    background: rgba(14, 165, 233, 0.15);
+}
+
+.btn.operator:hover {
+    background: rgba(14, 165, 233, 0.25);
+}
+
+.btn.action {
+    color: #f43f5e;
+    background: rgba(244, 63, 94, 0.15);
+}
+
+.btn.action:hover {
+    background: rgba(244, 63, 94, 0.25);
+}
+
+.btn.equals {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn.equals:hover {
+    background: linear-gradient(135deg, #38bdf8, #3b82f6);
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+}
+    </style>
+</head>
+<body>
+<Button onclick="document.location.href='index4.html'">Next Page</Button>
+    <div class="calculator">
+        <div class="display">
+            <div class="previous-operand" data-previous-operand></div>
+            <div class="current-operand" data-current-operand>0</div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn action" data-all-clear>AC</button>
+            <button class="btn action" data-delete>DEL</button>
+            <button class="btn operator" data-operator="%">%</button>
+            <button class="btn operator" data-operator="/">÷</button>
+
+            <button class="btn" data-number>7</button>
+            <button class="btn" data-number>8</button>
+            <button class="btn" data-number>9</button>
+            <button class="btn operator" data-operator="*">×</button>
+
+            <button class="btn" data-number>4</button>
+            <button class="btn" data-number>5</button>
+            <button class="btn" data-number>6</button>
+            <button class="btn operator" data-operator="-">−</button>
+
+            <button class="btn" data-number>1</button>
+            <button class="btn" data-number>2</button>
+            <button class="btn" data-number>3</button>
+            <button class="btn operator" data-operator="+">+</button>
+
+            <button class="btn zero" data-number>0</button>
+            <button class="btn" dotbtn>.</button>
+            <button class="btn equals" data-equals>=</button>
+        </div>
+    </div>
+
+    
+<script>
+    // Selectors
+const numberButtons = document.querySelectorAll('[data-number]');
+const operatorButtons = document.querySelectorAll('[data-operator]');
+const equalsButton = document.querySelector('[data-equals]');
+const deleteButton = document.querySelector('[data-delete]');
+const allClearButton = document.querySelector('[data-all-clear]');
+const previousOperandElement = document.querySelector('[data-previous-operand]');
+const currentOperandElement = document.querySelector('[data-current-operand]');
+const dot = document.querySelector('[dotbtn]')
+
+// Next steps for your practice:
+// 1. Create a Calculator class or group of functions to handle input.
+// 2. Add event listeners to 'numberButtons' to update the current operand display.
+// 3. Add listeners to 'operatorButtons' to store the current value and shift it to the upper display.
+// 4. Implement the math logic inside the equals listener!
+
+let variable = '';
+
+numberButtons.forEach((button) =>{
+    button.addEventListener('click',()=>{
+         if(variable ==='0'){
+            variable = '';
+         }
+         const number = button.innerText;
+
+         variable = variable + number;
+         
+         currentOperandElement.innerText = variable;
+
+
+    });
+});
+
+allClearButton.addEventListener('click',()=>{
+     previousOperandElement.innerText = '';
+     variable = '0';
+     currentOperandElement.innerText = variable;
+});
+
+
+deleteButton.addEventListener('click',()=>{
+      if(variable !== '0'){
+         variable = variable.slice(0, variable.length -1 );
+         currentOperandElement.innerText = variable;
+      }
+});
+
+const operators = ['−','×','%','÷','+']
+operatorButtons.forEach(element => {
+    element.addEventListener('click',()=>{
+        const number = element.innerText;
+        const lastChar = variable.slice(-1);
+         if (operators.includes(lastChar) && operators.includes(number)) {
+            // Replace the old operator with the new one
+            variable = variable.slice(0, -1) + number;
+            currentOperandElement.innerText = variable;
+            return;
+        }
+         variable = variable + number;
+         
+         currentOperandElement.innerText = variable;
+
+    })
+});
+dot.addEventListener('click', () => {
+    // 1. Find the position of the last operator typed
+    const lastOperatorIndex = Math.max(...operators.map(op => variable.lastIndexOf(op)));
+    
+    // 2. Extract just the last number from that point to the end
+    const currentNumber = variable.slice(lastOperatorIndex + 1);
+
+    // 3. If the current number doesn't have a dot yet, add it!
+    if (!currentNumber.includes('.')) {
+        variable += '.';
+        currentOperandElement.innerText = variable;
+    }
+});
+
+
+equalsButton.addEventListener('click',()=>{
+    if (variable==='') return ;
+
+    try{
+        previousOperandElement.innerText = variable;
+        let expression = variable.replace('×','*').replace('−','-').replace('÷','/');
+        expression = expression.replace(/([0-9.]+)\%/g, '($1/100)');
+        let Ans = eval(expression);
+        
+        variable = Ans.toString();
+
+        currentOperandElement.innerText = variable;
+    }
+    catch(error){
+        currentOperandElement.innerText = "Error";
+        variable = '';
+    }
+})
+</script>
+</body>
+</html>
