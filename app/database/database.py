@@ -43,7 +43,8 @@ from sqlalchemy.orm import sessionmaker
 SQLALCHEMY_DB_URL = os.getenv('POSTGRE_SQL_URL')
 if not SQLALCHEMY_DB_URL:
     print("Error with Importing SQL string ")
-engine = create_engine(SQLALCHEMY_DB_URL)
+engine = create_engine(SQLALCHEMY_DB_URL,
+                        connect_args={"connect_timeout": 10} )
 
 
 SessionLocal = sessionmaker(

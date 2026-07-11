@@ -18,7 +18,7 @@ class UserModel(Base):
     created_at = Column(TIMESTAMP(timezone=True),nullable=False,server_default=text('now()'))
     is_verified = Column(Boolean,server_default='FALSE',nullable=False)
     password_changed_at =Column(TIMESTAMP(timezone=True),nullable=True)
-    role_id = Column(Integer,ForeignKey("roles.id"),nullable=False,    server_default=3)
+    role_id = Column(Integer,ForeignKey("roles.id"),nullable=False,    server_default="3")
 
     post = relationship('PostModel')
     role = relationship("Roles")

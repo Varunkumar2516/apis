@@ -1,62 +1,234 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="backend-url" content="%REACT_APP_BACKEND_URL%" />
-<title>Sign up — PlaylistWise AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="style.css" />
-</head>
-<body>
-<div class="auth-wrap">
-  <div class="auth-side">
-    <a href="/" class="logo"><span class="logo-mark"><i class="ph ph-brain"></i></span><span>PlaylistWise.AI</span></a>
-    <div>
-      <h2>Turn any playlist into a <span class="grad-text">private tutor</span>.</h2>
-      <p>Join thousands of learners using AI to extract notes, ask questions, and master playlists 10x faster.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="backend-url" content="%REACT_APP_BACKEND_URL%" />
+    <title>Sign up — PlaylistWise AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="auth-wrap">
+      <div class="auth-side">
+        <a href="/" class="logo"
+          ><span class="logo-mark"><i class="ph ph-brain"></i></span
+          ><span>PlaylistWise.AI</span></a
+        >
+        <div>
+          <h2>
+            Turn any playlist into a
+            <span class="grad-text">private tutor</span>.
+          </h2>
+          <p>
+            Join thousands of learners using AI to extract notes, ask questions,
+            and master playlists 10x faster.
+          </p>
+        </div>
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+          "
+        >
+          © 2026 PlaylistWise AI
+        </p>
+      </div>
+      <div class="auth-form-wrap">
+        <div class="auth-card fade-in">
+          <h2>Create your account</h2>
+          <p class="sub">Free forever, no credit card required</p>
+          <form id="signup-form">
+            <div class="form-group">
+              <label for="name">Full Name</label
+              ><input
+                class="input"
+                id="name"
+                required
+                placeholder="Jane Doe"
+                data-testid="signup-name-input"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label
+              ><input
+                class="input"
+                type="email"
+                id="email"
+                required
+                placeholder="you@example.com"
+                data-testid="signup-email-input"
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label
+              ><input
+                class="input"
+                type="password"
+                id="password"
+                required
+                minlength="8"
+                maxlength="64"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*_=+]{8,64}"
+                placeholder="8-64 chars (Uppercase, lowercase, number, special char)"
+                data-testid="signup-password-input"
+              />
+              <!-- Element to hold the custom error styling if needed -->
+              <div
+                class="error-message"
+                id="password-error"
+                style="color: var(--error); font-size: 0.8rem; margin-top: 4px"
+              ></div>
+            </div>
+            <div class="form-group">
+              <label for="confirm">Confirm Password</label
+              ><input
+                class="input"
+                type="password"
+                id="confirm"
+                required
+                minlength="8"
+                maxlength="64"
+                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*_=+]{8,64}"
+                placeholder="Repeat password"
+                data-testid="signup-confirm-input"
+              />
+            </div>
+            <label class="check-row" style="margin-bottom: 18px"
+              ><input
+                type="checkbox"
+                id="terms"
+                required
+                data-testid="signup-terms-checkbox"
+              />
+              I agree to the
+              <a href="javascript:void(0);" class="auth-link">Terms</a> and
+              <a href="javascript:void(0);" class="auth-link">Privacy</a></label
+            >
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="width: 100%; justify-content: center"
+              data-testid="signup-submit-btn"
+            >
+              <span class="btn-label">Create Account</span>
+            </button>
+          </form>
+          <div class="divider">or continue with</div>
+          <button
+            class="btn btn-glass"
+            style="width: 100%; justify-content: center"
+            data-testid="signup-google-btn"
+            onclick="PW.toast('Google signup coming soon', 'info')"
+          >
+            <i class="ph ph-google-logo"></i> Continue with Google
+          </button>
+          <p
+            style="
+              text-align: center;
+              margin-top: 22px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Already have one?
+            <a
+              href="login.html"
+              class="auth-link"
+              data-testid="signup-to-login-link"
+              >Sign in</a
+            >
+          </p>
+        </div>
+      </div>
     </div>
-    <p style="color:var(--text-muted);font-size:0.85rem;position:relative;z-index:1">© 2026 PlaylistWise AI</p>
-  </div>
-  <div class="auth-form-wrap">
-    <div class="auth-card fade-in">
-      <h2>Create your account</h2>
-      <p class="sub">Free forever, no credit card required</p>
-      <form id="signup-form">
-        <div class="form-group"><label for="name">Full Name</label><input class="input" id="name" required placeholder="Jane Doe" data-testid="signup-name-input" /></div>
-        <div class="form-group"><label for="email">Email</label><input class="input" type="email" id="email" required placeholder="you@example.com" data-testid="signup-email-input" /></div>
-        <div class="form-group"><label for="password">Password</label><input class="input" type="password" id="password" required minlength="6" placeholder="At least 6 characters" data-testid="signup-password-input" /></div>
-        <div class="form-group"><label for="confirm">Confirm Password</label><input class="input" type="password" id="confirm" required minlength="6" placeholder="Repeat password" data-testid="signup-confirm-input" /></div>
-        <label class="check-row" style="margin-bottom:18px"><input type="checkbox" id="terms" required data-testid="signup-terms-checkbox" /> I agree to the <a href="#" class="auth-link">Terms</a> and <a href="#" class="auth-link">Privacy</a></label>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center" data-testid="signup-submit-btn"><span class="btn-label">Create Account</span></button>
-      </form>
-      <div class="divider">or continue with</div>
-      <button class="btn btn-glass" style="width:100%;justify-content:center" data-testid="signup-google-btn" onclick="PW.toast('Google signup coming soon', 'info')"><i class="ph ph-google-logo"></i> Continue with Google</button>
-      <p style="text-align:center;margin-top:22px;color:var(--text-secondary);font-size:0.9rem">Already have one? <a href="login.html" class="auth-link" data-testid="signup-to-login-link">Sign in</a></p>
-    </div>
-  </div>
-</div>
-<script src="script.js"></script>
-<script>
-document.getElementById('signup-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const pw = document.getElementById('password').value, cf = document.getElementById('confirm').value;
-  if (pw !== cf) return PW.toast('Passwords do not match', 'error');
-  const btn = e.target.querySelector('button[type=submit]');
-  const lbl = btn.querySelector('.btn-label');
-  btn.disabled = true; lbl.textContent = 'Creating...';
-  try {
-    const data = await PW.api('/auth/register', { method: 'POST', body: JSON.stringify({
-      full_name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      password: pw
-    })});
-    PW.setAuth(data.token, data.user);
-    PW.toast('Account created!', 'success');
-    setTimeout(() => window.location.href = 'dashboard.html', 500);
-  } catch (err) { PW.toast(err.message, 'error'); btn.disabled = false; lbl.textContent = 'Create Account'; }
-});
-</script>
-</body>
+    <script src="script.js"></script>
+    <script>
+      const passwordInput = document.getElementById("password");
+      const confirmInput = document.getElementById("confirm");
+
+      function validatePasswordRequirements() {
+        // Built-in check to see if the value matches the 'pattern' attribute regex
+        if (passwordInput.validity.patternMismatch) {
+          passwordInput.setCustomValidity(
+            "Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character (!@#$%^&*).",
+          );
+        } else {
+          // Reset validity status if it matches the pattern
+          passwordInput.setCustomValidity("");
+        }
+      }
+
+      // Watch inputs in real-time as the user types
+      passwordInput.addEventListener("input", validatePasswordRequirements);
+
+      // Optional: You can also strictly enforce match verification as they type the confirmation
+      confirmInput.addEventListener("input", () => {
+        if (confirmInput.value !== passwordInput.value) {
+          confirmInput.setCustomValidity("Passwords do not match.");
+        } else {
+          confirmInput.setCustomValidity("");
+        }
+      });
+
+      const form = document.getElementById("signup-form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const pw = document.getElementById("password").value,
+          cf = document.getElementById("confirm").value;
+        if (pw !== cf) return PW.toast("Passwords do not match", "error");
+        const btn = e.target.querySelector("button[type=submit]");
+        const lbl = btn.querySelector(".btn-label");
+        btn.disabled = true;
+        lbl.textContent = "Creating...";
+
+        try {
+          const response = await fetch(`http://127.0.0.1:8000/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: document.getElementById("name").value,
+              email: document.getElementById("email").value,
+              password: pw,
+            }),
+            credentials: "include",
+          });
+          const data = await response.json();
+          if (response.ok) {
+            const errorMsg =
+              data.detail ||
+              "Verification Email Sent Successfully . Please Verify Your Account.";
+            PW.toast(errorMsg, "success");
+
+            // ✅ Fixed: Re-enable the button so the user can fix their input
+            btn.disabled = false;
+            lbl.textContent = "Create Account";
+          } else {
+            btn.disabled = false;
+            lbl.textContent = "Create Account";
+
+            PW.toast(data.detail, "error");
+          }
+          // // PW.setAuth(data.token, data.user);
+          // PW.toast('We Have Sent Email Verification, Please verify your email.', 'success');
+          // setTimeout(() => window.location.href = 'dashboard.html', 500);
+        } catch (err) {
+          PW.toast(err.message, "error");
+
+          // Re-enable button on complete network failures
+          btn.disabled = false;
+          lbl.textContent = "Create Account";
+        }
+      });
+    </script>
+  </body>
 </html>

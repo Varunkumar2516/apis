@@ -25,6 +25,14 @@ def login(request: Request,credential_data : OAuth2PasswordRequestForm = Depends
     return Login_service(request,credential_data,db)
 
 
+
+@router.get('/auth/me')
+def me(current_user = Depends(oauth2.get_current_user)):
+    return current_user
+
+
+
+
 @router.post('/refresh',response_model = Token)
 def refresh(request: Request,token : refreshToken,db: Session = Depends(get_db)):
     return refresh_service(request,token,db)

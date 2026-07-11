@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="backend-url" content="%REACT_APP_BACKEND_URL%" />
+    <title>Dashboard — PlaylistWise AI</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a href="/" class="logo"
+          ><span class="logo-mark"><i class="ph ph-brain"></i></span
+          ><span>PlaylistWise</span></a
+        >
+        <a
+          class="side-link active"
+          href="dashboard.html"
+          data-testid="side-home"
+          ><i class="ph ph-house"></i> Home</a
+        >
+        <a
+          class="side-link"
+          href="dashboard.html"
+          data-testid="side-myplaylists"
+          ><i class="ph ph-playlist"></i> My Playlists</a
+        >
+        <a class="side-link" href="chatbot.html" data-testid="side-aichats"
+          ><i class="ph ph-chat-circle"></i> AI Chats</a
+        >
+        <a class="side-link" href="#" data-testid="side-history"
+          ><i class="ph ph-clock-counter-clockwise"></i> History</a
+        >
+        <a class="side-link" href="#" data-testid="side-bookmarks"
+          ><i class="ph ph-bookmark"></i> Bookmarks</a
+        >
+        <div class="side-section">Account</div>
+        <a class="side-link" href="profile.html" data-testid="side-profile"
+          ><i class="ph ph-user"></i> Profile</a
+        >
+        <a class="side-link" href="#" data-testid="side-settings"
+          ><i class="ph ph-gear"></i> Settings</a
+        >
+        <a class="side-link" href="#" data-testid="side-logout" data-logout
+          ><i class="ph ph-sign-out"></i> Logout</a
+        >
+      </aside>
+      <main class="app-main">
+        <div class="app-nav">
+          <div class="search-box">
+            <i class="ph ph-magnifying-glass"></i
+            ><input
+              placeholder="Search playlists, topics, videos..."
+              data-testid="dashboard-search"
+            />
+          </div>
+          <div class="nav-actions">
+            <button class="btn-icon btn-glass" data-testid="notif-btn">
+              <i class="ph ph-bell"></i>
+            </button>
+            <button class="btn-icon btn-glass" data-testid="theme-btn">
+              <i class="ph ph-moon"></i>
+            </button>
+            <a href="profile.html"
+              ><div
+                class="avatar"
+                data-user-avatar
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                  );
+                "
+                data-testid="nav-avatar"
+              >
+                U
+              </div></a
+            >
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="banner fade-in">
+            <span
+              class="badge"
+              style="
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.25);
+                color: #fff;
+              "
+              >AI Powered Learning</span
+            >
+            <h2>
+              Transform Playlists Into <span class="grad-text">Knowledge</span>
+            </h2>
+            <p>
+              Paste a YouTube playlist URL and our AI extracts every video,
+              builds embeddings, and turns it into your private tutor.
+            </p>
+            <div>
+              <a
+                href="#analyze"
+                class="btn btn-primary btn-lg"
+                data-testid="banner-start"
+                ><i class="ph ph-play-circle"></i> Start Learning</a
+              >
+            </div>
+          </div>
+
+          <div class="upload-box" id="analyze">
+            <i class="ph ph-link"></i>
+            <input
+              id="playlist-url"
+              class="input"
+              placeholder="Paste YouTube Playlist URL here..."
+              data-testid="analyze-url-input"
+            />
+            <button
+              id="analyze-btn"
+              class="btn btn-primary"
+              data-testid="analyze-btn"
+            >
+              <span class="btn-label"
+                ><i class="ph ph-magic-wand"></i> Analyze Playlist</span
+              >
+            </button>
+          </div>
+
+          <div class="pills" id="cat-pills"></div>
+
+          <div class="sec-title">
+            <h3>Popular Playlists</h3>
+            <a href="#">View all</a>
+          </div>
+          <div class="playlist-grid" id="popular-grid"></div>
+
+          <div class="sec-title">
+            <h3>Continue Learning</h3>
+            <a href="#">See history</a>
+          </div>
+          <div class="playlist-grid" id="continue-grid"></div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      if (!PW.requireAuth()) {
+      } else {
+        PW.api("/auth/me")
+          .then((data) => {
+            console.log("Current User:", data);
+
+            document.querySelectorAll("[data-user-name]").forEach((el) => {
+              el.textContent = data.user.full_name;
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        const CATEGORIES = [
+          "All",
+          "Machine Learning",
+          "NLP",
+          "Deep Learning",
+          "Data Science",
+          "Python",
+          "DSA",
+          "Generative AI",
+        ];
+        let allPlaylists = [],
+          currentCat = "All";
+
+        const pills = document.getElementById("cat-pills");
+        CATEGORIES.forEach((c, i) => {
+          const p = document.createElement("button");
+          p.className = "pill" + (i === 0 ? " active" : "");
+          p.textContent = c;
+          p.dataset.testid = `cat-${c.toLowerCase().replace(/\s+/g, "-")}`;
+          p.onclick = () => {
+            currentCat = c;
+            document
+              .querySelectorAll(".pill")
+              .forEach((el) => el.classList.remove("active"));
+            p.classList.add("active");
+            renderGrid();
+          };
+          pills.appendChild(p);
+        });
+
+        function pCard(pl, progress) {
+          return `<a class="pl-card fade-in" onclick="window.location='playlist.html?id=${pl.id}'"" data-testid="pl-card-${pl.id}">
+      <div class="pl-thumb">
+        <img src="${pl.thumbnail}" alt="${pl.title}" />
+        <span class="ai-ready"><i class="ph-bold ph-sparkle"></i> AI Ready</span>
+        <span class="duration">${pl.duration}</span>
+      </div>
+      <div class="pl-info">
+        <h4>${pl.title}</h4>
+        <div class="creator">${pl.creator}</div>
+        <div class="meta">${pl.videos_count} videos · ${pl.category}</div>
+        ${progress !== undefined ? `<div class="progress"><div style="width:${progress}%"></div></div><div class="meta">${progress}% complete</div>` : ""}
+      </div>
+    </a>`;
+        }
+
+        function renderGrid() {
+          const list =
+            currentCat === "All"
+              ? allPlaylists
+              : allPlaylists.filter((p) => p.category === currentCat);
+          document.getElementById("popular-grid").innerHTML = list
+            .map((p) => pCard(p))
+            .join("");
+          // Continue watching = first 3 with mock progress
+          const cont = allPlaylists.slice(0, 3);
+          document.getElementById("continue-grid").innerHTML = cont
+            .map((p, i) => pCard(p, [35, 62, 84][i]))
+            .join("");
+        }
+
+        PW.api("/playlists")
+          .then((data) => {
+            allPlaylists = data.playlists || [];
+            renderGrid();
+          })
+          .catch((e) => PW.toast(e.message, "error"));
+
+        document
+          .getElementById("analyze-btn")
+          .addEventListener("click", async () => {
+            const url = document.getElementById("playlist-url").value.trim();
+            if (!url) return PW.toast("Paste a YouTube playlist URL", "error");
+            const btn = document.getElementById("analyze-btn");
+            const lbl = btn.querySelector(".btn-label");
+            btn.disabled = true;
+            lbl.innerHTML = '<div class="spinner"></div> Analyzing...';
+            try {
+              const r = await PW.api("/playlists/analyze", {
+                method: "POST",
+                body: JSON.stringify({ url }),
+              });
+              PW.toast("Playlist ready!", "success");
+              setTimeout(
+                () =>
+                  (window.location.href = `playlist.html?id=${r.playlist.id}`),
+                700,
+              );
+            } catch (e) {
+              PW.toast(e.message, "error");
+              btn.disabled = false;
+              lbl.innerHTML =
+                '<i class="ph ph-magic-wand"></i> Analyze Playlist';
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

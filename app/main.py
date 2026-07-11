@@ -36,9 +36,13 @@ app.include_router(user.router)
 app.include_router(post.router)
 app.include_router(password.router)
 # Allow your local frontend files to communicate with your backend port
+origins = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For practicing, allow all origins
+    allow_origins=origins,  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

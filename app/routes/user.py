@@ -1,4 +1,4 @@
-from fastapi import Depends, APIRouter, status, HTTPException, Response
+from fastapi import Depends, APIRouter, status, HTTPException, Response,Request
 from sqlalchemy.orm import Session
 from typing import List
 from app.database import get_db
@@ -14,7 +14,7 @@ router = APIRouter(
     tags=['User']
 )
 
-@router.post('/user', status_code=status.HTTP_201_CREATED, response_model=UserResponse)
+@router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UserResponse)
 async def CreateUser(data: UserCreate, db: Session = Depends(get_db)):
     
     # 1. Check if email already exists
@@ -59,7 +59,7 @@ async def CreateUser(data: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/verify-email")
-def verify_email(token: str, db: Session = Depends(get_db)):
+def verify_email(token: str,request:Request, db: Session = Depends(get_db)):
     payload = oauth2.verify_email_token(token)
 
     user = db.query(models.UserModel).filter(models.UserModel.id == payload.user_id).first()
@@ -79,13 +79,37 @@ def verify_email(token: str, db: Session = Depends(get_db)):
     
     user.is_verified = True
     db.commit()
-
-    # Smooth Frontend Handoff: Redirect straight to the success page!
-    html = render_template(
-                            "pages/verified_email.html",
-                            username=user.name,)
-
-    return HTMLResponse(content=html)
+    
+    access_token = oauth2.create_access_token(user_id = user.id)[0]
+    refresh_token,refresh_token_data = oauth2.create_refresh_token(user_id=user.id)
+    refresh_token_obj = models.RefreshToken(user_id = refresh_token_data.user_id,
+                jwid = refresh_token_data.jti,
+                expires_at = refresh_token_data.exp,
+                user_agent=request.headers.get("User-Agent"))
+    db.add(refresh_token_obj)
+    db.commit()
+    url = 'http://127.0.0.1:3000/Frontend/dummy.html'
+    response = RedirectResponse(
+        url=url, 
+        status_code=status.HTTP_303_SEE_OTHER
+    )
+    
+    response.set_cookie(
+    key="access_token",
+    value=access_token,
+    httponly=True,
+    secure=False,
+    samesite="Lax"
+)
+    response.set_cookie(
+    key="refresh_token",
+    value=refresh_token,
+    httponly=True,
+    secure=False,
+    samesite="Lax"
+)
+    
+    return response
     
 
 

@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  redis:
+    image: redis
+    container_name: redis_server
+    ports:
+      - 6379:6379
+
+    networks:
+      - app_network
+
+    volumes:
+      - redis_data:/data
+
+    command: redis-server --appendonly yes
+
+  backend:
+    build: .
+
+    container_name: fastapi_backend
+
+    env_file:
+      - ./app/config.env
+
+    ports:
+      - 8000:8000
+
+    volumes:
+      - .:/app
+
+    networks:
+      - app_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: varun@123
+      POSTGRES_DB: fastapi
+
+    ports:
+      - 5432:5432
+    networks:
+      - app_network
+    volumes:
+      - postgres_data:/var/lib/postgresql
+
+    healthcheck: # <- Added healthcheck rule
+      test: ["CMD-SHELL", "pg_isready -U postgres -d fastapi"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  app_network:
+    driver: bridge

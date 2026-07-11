@@ -7,7 +7,7 @@ import os
 import app.schema as schema
 
 
-from fastapi import Depends,status,HTTPException
+from fastapi import Depends,status,HTTPException,Request
 
 # for extracting the token from authorization Request
 from fastapi.security import OAuth2PasswordBearer,HTTPBearer
@@ -132,17 +132,32 @@ def verify_forget_password_token(token:str):
 
 
 
-# doing automatically extracting the Token for authorize and using that everytime to access the APIS
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl='login'
-)
-# we need to manually Putthe Token to Authorize 
-http_bearer = HTTPBearer()
+# # doing automatically extracting the Token for authorize and using that everytime to access the APIS
+# oauth2_scheme = OAuth2PasswordBearer(
+#     tokenUrl='login'
+# )
+# # we need to manually Putthe Token to Authorize 
+# http_bearer = HTTPBearer()
 
 
 
-def get_current_user(token:str=Depends(oauth2_scheme),db:Session = Depends(get_db)):
+# def get_current_user(token:str=Depends(oauth2_scheme),db:Session = Depends(get_db)):
    
+#      token_data = verify_access_token(token)
+
+#      current_user = db.query(models.UserModel).filter(models.UserModel.id == token_data.user_id).first()
+#      if not current_user:
+#          raise credentials_exception
+#      return current_user
+    
+
+
+# for Cookie Based Authentication
+def get_current_user(request : Request ,db:Session = Depends(get_db)):
+     
+     token = request.cookies.get("access_token")
+     if not token:
+        raise credentials_exception
      token_data = verify_access_token(token)
 
      current_user = db.query(models.UserModel).filter(models.UserModel.id == token_data.user_id).first()
